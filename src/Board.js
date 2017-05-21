@@ -5,6 +5,7 @@ import Knight from "./Knight";
 import { moveKnight, canMoveKnight } from "./Game";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
+import BoardSquare from "./BoardSquare";
 
 class Board extends PureComponent {
 	static propTypes = {
@@ -14,6 +15,13 @@ class Board extends PureComponent {
 	handleSquareClick(toX, toY) {
 		if (canMoveKnight(toX, toY)) {
 			moveKnight(toX, toY);
+		}
+	}
+
+	renderPiece(x, y) {
+		const [knightX, knightY] = this.props.knightPosition;
+		if (x === knightX && y === knightY) {
+			return <Knight />;
 		}
 	}
 
@@ -34,9 +42,9 @@ class Board extends PureComponent {
 				}}
 				onClick={() => this.handleSquareClick(x, y)}
 			>
-				<Square black={black}>
-					{piece}
-				</Square>
+				<BoardSquare x={x} y={y}>
+					{this.renderPiece(x, y)}
+				</BoardSquare>
 			</div>
 		);
 	}
