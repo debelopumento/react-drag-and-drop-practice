@@ -2,12 +2,18 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import Square from "./Square";
 import Knight from "./Knight";
-import { moveKnight } from "./Game";
+import { moveKnight, canMoveKnight } from "./Game";
 
 export default class Board extends PureComponent {
 	static propTypes = {
 		knightPosition: PropTypes.arrayOf(PropTypes.number.isRequred).isRequred
 	};
+
+	handleSquareClick(toX, toY) {
+		if (canMoveKnight(toX, toY)) {
+			moveKnight(toX, toY);
+		}
+	}
 
 	renderSquare(i) {
 		const x = i % 8;
@@ -31,10 +37,6 @@ export default class Board extends PureComponent {
 				</Square>
 			</div>
 		);
-	}
-
-	handleSquareClick(toX, toY) {
-		moveKnight(toX, toY);
 	}
 
 	render() {
