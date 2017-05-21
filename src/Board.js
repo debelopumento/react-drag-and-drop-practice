@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import Square from "./Square";
 import Knight from "./Knight";
+import { moveKnight } from "./Game";
 
 export default class Board extends PureComponent {
 	static propTypes = {
@@ -15,6 +16,7 @@ export default class Board extends PureComponent {
 
 		const [knightX, knightY] = this.props.knightPosition;
 		const piece = x === knightX && y === knightY ? <Knight /> : null;
+
 		return (
 			<div
 				key={i}
@@ -22,12 +24,17 @@ export default class Board extends PureComponent {
 					width: 50,
 					height: 50
 				}}
+				onClick={() => this.handleSquareClick(x, y)}
 			>
 				<Square black={black}>
 					{piece}
 				</Square>
 			</div>
 		);
+	}
+
+	handleSquareClick(toX, toY) {
+		moveKnight(toX, toY);
 	}
 
 	render() {
